@@ -1,4 +1,5 @@
 import { nextTestSetup } from 'e2e-utils'
+import { assertNoConsoleErrors } from 'next-test-utils'
 
 describe('ppr-metadata-streaming', () => {
   const { next } = nextTestSetup({
@@ -10,11 +11,23 @@ describe('ppr-metadata-streaming', () => {
     it('should generate metadata in body when page is fully static', async () => {
       const $ = await next.render$('/fully-static')
       expect($(`body title`).text()).toBe('fully static')
+
+      const browser = await next.browser('/fully-static')
+      expect(await browser.waitForElementByCss('body title').text()).toBe(
+        'fully static'
+      )
+      await assertNoConsoleErrors(browser)
     })
 
     it('should insert metadata in body when page is dynamic page content', async () => {
       const $ = await next.render$('/dynamic-page')
       expect($(`body title`).text()).toBe('dynamic page')
+
+      const browser = await next.browser('/dynamic-page')
+      expect(await browser.waitForElementByCss('body title').text()).toBe(
+        'dynamic page'
+      )
+      await assertNoConsoleErrors(browser)
     })
   })
 
@@ -23,11 +36,23 @@ describe('ppr-metadata-streaming', () => {
     it('should generate metadata in head when page is fully dynamic', async () => {
       const $ = await next.render$('/fully-dynamic')
       expect($('body title').text()).toBe('fully dynamic')
+
+      const browser = await next.browser('/fully-dynamic')
+      expect(await browser.waitForElementByCss('body title').text()).toBe(
+        'fully dynamic'
+      )
+      await assertNoConsoleErrors(browser)
     })
 
     it('should generate metadata in head when page content is static', async () => {
       const $ = await next.render$('/dynamic-metadata')
       expect($('body title').text()).toBe('dynamic metadata')
+
+      const browser = await next.browser('/dynamic-metadata')
+      expect(await browser.waitForElementByCss('body title').text()).toBe(
+        'dynamic metadata'
+      )
+      await assertNoConsoleErrors(browser)
     })
   })
 
@@ -37,9 +62,10 @@ describe('ppr-metadata-streaming', () => {
       expect($('body title').text()).toBe('dynamic-metadata - partial')
 
       const browser = await next.browser('/dynamic-metadata/partial')
-      expect(await browser.waitForElementByCss('title').text()).toBe(
+      expect(await browser.waitForElementByCss('body title').text()).toBe(
         'dynamic-metadata - partial'
       )
+      await assertNoConsoleErrors(browser)
     })
 
     it('should insert metadata into body with dynamic metadata and dynamic page wrapped under layout Suspense boundary', async () => {
@@ -47,9 +73,10 @@ describe('ppr-metadata-streaming', () => {
       expect($('body title').text()).toBe('dynamic-page - partial')
 
       const browser = await next.browser('/dynamic-page/partial')
-      expect(await browser.waitForElementByCss('title').text()).toBe(
+      expect(await browser.waitForElementByCss('body title').text()).toBe(
         'dynamic-page - partial'
       )
+      await assertNoConsoleErrors(browser)
     })
   })
 })

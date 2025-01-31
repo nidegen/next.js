@@ -1,11 +1,10 @@
 'use client'
 
 import { useContext } from 'react'
-
 import {
-  ServerInsertedMetadataContext,
   type MetadataResolver,
-} from '../../../shared/lib/server-inserted-metadata-context.shared-runtime'
+  ServerInsertedMetadataContext,
+} from '../../../shared/lib/server-inserted-metadata.shared-runtime'
 
 // Receives a metadata resolver setter from the context, and will pass the metadata resolving promise to
 // the context where we gonna use it to resolve the metadata, and render as string to append in <body>.
@@ -14,7 +13,7 @@ export const useServerInsertedMetadata = (
 ) => {
   const setMetadataResolver = useContext(ServerInsertedMetadataContext)
 
-  if (typeof setMetadataResolver === 'function') {
+  if (setMetadataResolver) {
     setMetadataResolver(metadataResolver)
   }
 }

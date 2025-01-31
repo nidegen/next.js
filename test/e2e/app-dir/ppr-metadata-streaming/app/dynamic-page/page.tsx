@@ -18,7 +18,7 @@ async function SubComponent() {
 
 export async function generateMetadata() {
   // Slow but static metadata
-  await new Promise((resolve) => setTimeout(resolve, 3 * 1000))
+  await new Promise((resolve) => setTimeout(resolve, 2 * 1000))
   return {
     title: `dynamic page`,
   }

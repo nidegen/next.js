@@ -323,7 +323,9 @@ function createDivergedMetadataComponents(
   StaticMetadata: React.ComponentType<{}>
   StreamingMetadata: React.ComponentType<{}>
 } {
-  const EmptyMetadata = () => null
+  function EmptyMetadata() {
+    return null
+  }
   const StreamingMetadata: React.ComponentType<{}> = serveStreamingMetadata
     ? Metadata
     : EmptyMetadata
@@ -1058,15 +1060,15 @@ function App<T>({
         nonce,
       }}
     >
-      <ServerInsertedHTMLProvider>
-        <ServerInsertedMetadataProvider>
+      <ServerInsertedMetadataProvider>
+        <ServerInsertedHTMLProvider>
           <AppRouter
             actionQueue={actionQueue}
             globalErrorComponentAndStyles={response.G}
             assetPrefix={response.p}
           />
-        </ServerInsertedMetadataProvider>
-      </ServerInsertedHTMLProvider>
+        </ServerInsertedHTMLProvider>
+      </ServerInsertedMetadataProvider>
     </HeadManagerContext.Provider>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { use, type JSX } from 'react'
-import { useServerInsertedMetadata } from '../../server/app-render/metadata-insertion/server-inserted-metadata'
+import { useServerInsertedMetadata } from '../../server/app-render/metadata-insertion/use-server-inserted-metadata'
 
 function ServerInsertMetadata({ promise }: { promise: Promise<JSX.Element> }) {
   // Apply use() to the metadata promise to suspend the rendering in SSR.

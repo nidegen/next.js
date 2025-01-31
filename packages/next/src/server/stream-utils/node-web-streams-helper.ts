@@ -200,18 +200,18 @@ function createInsertedMetadataStream(
   return new TransformStream({
     transform: async (chunk, controller) => {
       controller.enqueue(chunk)
-      const metadata = await getServerInsertedMetadata()
-      if (metadata) {
-        controller.enqueue(encoder.encode(metadata))
+      const html = await getServerInsertedMetadata()
+      if (html) {
+        controller.enqueue(encoder.encode(html))
         inserted = true
       }
     },
     flush: async (controller) => {
       if (inserted) return
       // Flush the pending metadata if it hasn't been inserted yet
-      const metadata = await getServerInsertedMetadata()
-      if (metadata) {
-        controller.enqueue(encoder.encode(metadata))
+      const html = await getServerInsertedMetadata()
+      if (html) {
+        controller.enqueue(encoder.encode(html))
       }
     },
   })
