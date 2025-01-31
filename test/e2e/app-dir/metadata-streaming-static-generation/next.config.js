@@ -3,7 +3,6 @@
  */
 const nextConfig = {
   experimental: {
-    ppr: true,
     streamingMetadata: true,
   },
 }
